@@ -1,15 +1,18 @@
 import React, {
   createContext,
   PropsWithChildren,
+  useCallback,
   useContext,
   useState,
 } from "react";
 import { IUser } from "../util/IUser";
 
 interface IUserContext {
-  user?: IUser;
+  user?: IUser | object;
+  userToken: string;
   logged: boolean;
-  handleSetUserData: (user: IUser) => void;
+  handleSetUserData: (user: IUser, token: string) => void;
+  logout: () => void;
 }
 
 interface Props {
@@ -25,16 +28,29 @@ export const useUserContext = () => {
 export const UserProvider: React.FC<PropsWithChildren<Props>> = ({
   children,
 }) => {
-  const [user, setUser] = useState<IUser>();
-  const [logged, setLogged] = useState<boolean>(true);
+  const [user, setUser] = useState<IUser | object>();
+  const [userToken, setUserToken] = useState<string>("");
+  const [logged, setLogged] = useState<boolean>(false);
 
-  function handleSetUserData(newUser: IUser) {
-    setUser(newUser);
+  const handleSetUserData = useCallback(
+    (newUser: IUser, token: string) => {
+      setUser(newUser);
+      setUserToken(token);
+      setLogged(!logged);
+    },
+    [logged]
+  );
+
+  const logout = useCallback(() => {
+    setUser({});
+    setUserToken("");
     setLogged(!logged);
-  }
+  }, [logged]);
 
   return (
-    <UserContext.Provider value={{ user, logged, handleSetUserData }}>
+    <UserContext.Provider
+      value={{ user, userToken, logged, handleSetUserData, logout }}
+    >
       {children}
     </UserContext.Provider>
   );

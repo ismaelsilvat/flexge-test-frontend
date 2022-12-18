@@ -16,10 +16,13 @@ import {
 } from "@ant-design/icons";
 import { Button, Layout, Menu } from "antd";
 import type { MenuProps } from "antd";
+import { useUserContext } from "../context/User";
 
 const { Header } = Layout;
 
 export const HeaderC: React.FC = () => {
+  const { logout } = useUserContext();
+
   const items: MenuProps["items"] = [
     {
       label: <a href="/">Dashboard</a>,
@@ -106,6 +109,7 @@ export const HeaderC: React.FC = () => {
           left: "85%",
           transform: "rotate(270deg)",
         }}
+        onClick={logout}
       />
     </Header>
   );

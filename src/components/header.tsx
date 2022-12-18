@@ -84,31 +84,29 @@ export const HeaderC: React.FC = () => {
   ];
 
   return (
-    <Layout>
-      <Header
+    <Header
+      style={{
+        position: "sticky",
+        top: 0,
+        zIndex: 1,
+        width: "100%",
+      }}
+    >
+      <Menu
+        theme="dark"
+        mode="horizontal"
+        defaultSelectedKeys={["2"]}
+        items={items}
+      />
+      <Button
+        icon={<LogoutOutlined />}
         style={{
-          position: "sticky",
-          top: 0,
-          zIndex: 1,
-          width: "100%",
+          position: "absolute",
+          top: "25%",
+          left: "85%",
+          transform: "rotate(270deg)",
         }}
-      >
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          defaultSelectedKeys={["2"]}
-          items={items}
-        />
-        <Button
-          icon={<LogoutOutlined />}
-          style={{
-            position: "absolute",
-            top: "25%",
-            left: "85%",
-            transform: "rotate(270deg)",
-          }}
-        />
-      </Header>
-    </Layout>
+      />
+    </Header>
   );
 };

@@ -1,24 +1,26 @@
 import * as React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import { ConfigProvider, theme } from "antd";
+import { ConfigProvider } from "antd";
 import "antd/dist/reset.css";
-import { TitleComponent } from "./Test";
-
-const { useToken } = theme;
+import ApplicationRoutes from "./routes/Routes";
+import GlobalContext from "./context";
 
 export const App = () => {
   return (
     <>
-      <ConfigProvider
-        theme={{
-          token: {
-            colorPrimary: "pink",
-          },
-        }}
-      >
-        <TitleComponent />
-        <Router></Router>
-      </ConfigProvider>
+      <GlobalContext>
+        <ConfigProvider
+          theme={{
+            token: {
+              colorPrimary: "pink",
+            },
+          }}
+        >
+          <Router>
+            <ApplicationRoutes />
+          </Router>
+        </ConfigProvider>
+      </GlobalContext>
     </>
   );
 };

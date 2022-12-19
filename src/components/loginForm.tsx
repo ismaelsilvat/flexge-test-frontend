@@ -5,7 +5,7 @@ import { useUserContext } from "../context/User";
 import { useDispatch } from "react-redux";
 import { login } from "../store/api/conf";
 
-export const InputForm: React.FC = () => {
+export const LoginForm: React.FC = () => {
   const { handleSetUserData } = useUserContext();
   const dispatch = useDispatch();
 

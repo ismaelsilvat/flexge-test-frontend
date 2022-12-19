@@ -2,10 +2,14 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { useUserContext } from "../context/User";
 
-import { Login, Dashboard } from "../pages";
+import { Login, Dashboard, NewContract } from "../pages";
 
 export default function ApplicationRoutes() {
   const { logged } = useUserContext();
+
+  // const activeRoutes = (logged: boolean) => {
+  //   return logged === true ? <LoggedRoutes /> : <IndexRoute />;
+  // };
 
   const IndexRoute = () => {
     return (
@@ -20,8 +24,10 @@ export default function ApplicationRoutes() {
       <Routes>
         <Route element={<Dashboard />} path={"/"} />
         <Route element={<Login />} path={"/login"} />
+        <Route element={<NewContract />} path={"/contract/add"}></Route>
       </Routes>
     );
   };
-  return <>{logged === true ? <LoggedRoutes /> : <IndexRoute />}</>;
+
+  return !!logged === true ? <LoggedRoutes /> : <IndexRoute />;
 }

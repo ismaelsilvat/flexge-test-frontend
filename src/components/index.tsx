@@ -1,2 +1,3 @@
 export * from "./header";
-export * from "./inputForm";
+export * from "./loginForm";
+export * from "./contractForm";

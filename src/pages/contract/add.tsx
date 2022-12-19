@@ -1,17 +1,12 @@
-import { Breadcrumb, Col, Row, Typography, Divider } from "antd";
-import Layout, { Content } from "antd/es/layout/layout";
+import { Breadcrumb, Col, Divider, Layout, Row, Typography } from "antd";
+import { Content } from "antd/es/layout/layout";
 import React from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { HeaderC } from "../components";
-import { RootState } from "../store";
+import { ContractForm, HeaderC } from "../../components";
 
 const { Title } = Typography;
 
-export const Dashboard: React.FC = () => {
-  const token = useSelector((state: RootState) => state.api);
-  console.log(token);
-
+export const NewContract: React.FC = () => {
   const navigate = useNavigate();
 
   const navigateTo = (target: string) => () => navigate(target);
@@ -29,7 +24,9 @@ export const Dashboard: React.FC = () => {
       >
         <Breadcrumb style={{ margin: "16px 0" }}>
           <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>Contracts</Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <strong>Create Contract</strong>
+          </Breadcrumb.Item>
         </Breadcrumb>
         <div
           style={{
@@ -40,7 +37,7 @@ export const Dashboard: React.FC = () => {
         >
           <Row style={{ justifyContent: "space-between" }}>
             <Col>
-              <Title level={4}>Contracts</Title>
+              <Title level={4}>Create Contract</Title>
             </Col>
             <Col
               style={{
@@ -53,13 +50,14 @@ export const Dashboard: React.FC = () => {
             >
               <div
                 style={{ color: "var(--colorPrimary)", cursor: "pointer" }}
-                onClick={navigateTo("/contract/add")}
+                onClick={navigateTo("/")}
               >
-                + New Contract
+                <strong>{"<- Back"}</strong>
               </div>
             </Col>
           </Row>
           <Divider />
+          <ContractForm />
         </div>
       </Content>
     </Layout>

@@ -1,6 +1,6 @@
 import { Layout } from "antd";
 import React from "react";
-import { InputForm } from "../components";
+import { LoginForm } from "../components";
 
 export const Login: React.FC = () => {
   return (
@@ -12,7 +12,7 @@ export const Login: React.FC = () => {
         justifyContent: "center",
       }}
     >
-      <InputForm />
+      <LoginForm />
     </Layout>
   );
 };

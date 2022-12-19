@@ -28,7 +28,7 @@ export const UserProvider: React.FC<PropsWithChildren<Props>> = ({
   children,
 }) => {
   const [user, setUser] = useState<IUser | object>();
-  const [logged, setLogged] = useState<boolean>(false);
+  const [logged, setLogged] = useState<boolean>(true);
 
   const handleSetUserData = useCallback(
     (newUser: IUser) => {

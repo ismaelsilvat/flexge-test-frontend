@@ -22,9 +22,12 @@ export const products = createSlice({
     addProduct: (state, action: PayloadAction<IProduct>) => {
       state.data = [...state.data, action.payload];
     },
+    removeAll: (state) => {
+      state.data = [];
+    },
   },
 });
 
-export const { addProduct } = products.actions;
+export const { addProduct, removeAll } = products.actions;
 
 export default products.reducer;

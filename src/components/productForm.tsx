@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Col, Form, Input, Select } from "antd";
 import styled from "styled-components";
 import { ProductsTable } from "./productsTable";
@@ -6,12 +6,24 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import { useForm } from "antd/es/form/Form";
 import { useDispatch } from "react-redux";
-import { addProduct } from "../store/contract/add/products";
+import { addProduct, removeAll } from "../store/contract/add/products";
 
 const { Option } = Select;
 
-export const ProductForm: React.FC = () => {
+interface props {
+  resetField: boolean;
+}
+
+export const ProductForm: React.FC<props> = ({ resetField }) => {
   const [form] = useForm();
+  const products = useSelector((state: RootState) => state.products.data);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!resetField) return;
+    form.resetFields();
+    dispatch(removeAll());
+  }, [dispatch, form, resetField]);
 
   const RowS = styled.div`
     width: 100%;
@@ -31,8 +43,6 @@ export const ProductForm: React.FC = () => {
       }
     }
   `;
-  const products = useSelector((state: RootState) => state.products.data);
-  const dispatch = useDispatch();
 
   const addProductClick = () => {
     const values = form.getFieldsValue();

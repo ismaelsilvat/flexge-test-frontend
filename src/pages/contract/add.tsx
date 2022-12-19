@@ -9,7 +9,7 @@ import {
 } from "antd";
 import { useForm } from "antd/es/form/Form";
 import { Content } from "antd/es/layout/layout";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ContractForm, HeaderC, ProductForm } from "../../components";
 
@@ -21,6 +21,16 @@ export const NewContract: React.FC = () => {
   const navigateTo = (target: string) => () => navigate(target);
 
   const [form] = useForm();
+  const [resetField, setResetField] = useState<boolean>(false);
+
+  useEffect(() => {
+    function setFalse() {
+      setResetField(false);
+    }
+    if (!!resetField) {
+      setTimeout(setFalse, 500);
+    }
+  }, [resetField]);
 
   return (
     <Layout>
@@ -69,7 +79,6 @@ export const NewContract: React.FC = () => {
           </Row>
           <Divider />
           <ContractForm form={form} />
-          <Button onClick={() => form.submit()}>Create Contract</Button>
         </div>
         <div
           style={{
@@ -78,7 +87,24 @@ export const NewContract: React.FC = () => {
             background: "#fff",
           }}
         >
-          <ProductForm />
+          <ProductForm resetField={resetField} />
+        </div>
+        <div
+          style={{
+            marginTop: 32,
+            padding: 24,
+            background: "#fff",
+          }}
+        >
+          <Button
+            onClick={() => {
+              setResetField(true);
+              form.resetFields();
+            }}
+          >
+            Discard Changes
+          </Button>
+          <Button onClick={() => form.submit()}>Create Contract</Button>
         </div>
       </Content>
     </Layout>

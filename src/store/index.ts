@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import apiConf from "./api/conf";
+import products from "./contract/add/products";
 
 const store = configureStore({
   reducer: {
     api: apiConf,
+    products: products,
   },
 });
 

@@ -1,8 +1,17 @@
-import { Breadcrumb, Col, Divider, Layout, Row, Typography } from "antd";
+import {
+  Breadcrumb,
+  Button,
+  Col,
+  Divider,
+  Layout,
+  Row,
+  Typography,
+} from "antd";
+import { useForm } from "antd/es/form/Form";
 import { Content } from "antd/es/layout/layout";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { ContractForm, HeaderC } from "../../components";
+import { ContractForm, HeaderC, ProductForm } from "../../components";
 
 const { Title } = Typography;
 
@@ -11,6 +20,8 @@ export const NewContract: React.FC = () => {
 
   const navigateTo = (target: string) => () => navigate(target);
 
+  const [form] = useForm();
+
   return (
     <Layout>
       <HeaderC />
@@ -18,7 +29,7 @@ export const NewContract: React.FC = () => {
         className="site-layout"
         style={{
           padding: "0 50px",
-          height: "calc(100vh - 64px)",
+          minHeight: "calc(100vh - 64px)",
           marginTop: "auto",
         }}
       >
@@ -57,7 +68,17 @@ export const NewContract: React.FC = () => {
             </Col>
           </Row>
           <Divider />
-          <ContractForm />
+          <ContractForm form={form} />
+          <Button onClick={() => form.submit()}>Create Contract</Button>
+        </div>
+        <div
+          style={{
+            marginTop: 32,
+            padding: 24,
+            background: "#fff",
+          }}
+        >
+          <ProductForm />
         </div>
       </Content>
     </Layout>

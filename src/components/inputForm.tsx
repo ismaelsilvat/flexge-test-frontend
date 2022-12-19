@@ -2,13 +2,17 @@ import React from "react";
 import { Button, Form, Input } from "antd";
 import { useLogin } from "../services/useLogin";
 import { useUserContext } from "../context/User";
+import { useDispatch } from "react-redux";
+import { login } from "../store/api/conf";
 
 export const InputForm: React.FC = () => {
   const { handleSetUserData } = useUserContext();
+  const dispatch = useDispatch();
 
   const OnFinish = async (values: any) => {
     const fetchData = await useLogin(values);
-    handleSetUserData(fetchData.user, fetchData.token);
+    dispatch(login(fetchData.token));
+    handleSetUserData(fetchData.user);
   };
 
   const onFinishFailed = (errorInfo: any) => {

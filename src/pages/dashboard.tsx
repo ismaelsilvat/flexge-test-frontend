@@ -1,11 +1,16 @@
 import { Breadcrumb, Col, Row, Typography, Divider } from "antd";
 import Layout, { Content } from "antd/es/layout/layout";
 import React from "react";
+import { useSelector } from "react-redux";
 import { HeaderC } from "../components";
+import { RootState } from "../store";
 
 const { Title } = Typography;
 
 export const Dashboard: React.FC = () => {
+  const token = useSelector((state: RootState) => state.api);
+  console.log(token);
+
   return (
     <Layout>
       <HeaderC />

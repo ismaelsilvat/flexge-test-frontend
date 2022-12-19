@@ -9,9 +9,8 @@ import { IUser } from "../util/IUser";
 
 interface IUserContext {
   user?: IUser | object;
-  userToken: string;
   logged: boolean;
-  handleSetUserData: (user: IUser, token: string) => void;
+  handleSetUserData: (user: IUser) => void;
   logout: () => void;
 }
 
@@ -29,13 +28,11 @@ export const UserProvider: React.FC<PropsWithChildren<Props>> = ({
   children,
 }) => {
   const [user, setUser] = useState<IUser | object>();
-  const [userToken, setUserToken] = useState<string>("");
   const [logged, setLogged] = useState<boolean>(false);
 
   const handleSetUserData = useCallback(
-    (newUser: IUser, token: string) => {
+    (newUser: IUser) => {
       setUser(newUser);
-      setUserToken(token);
       setLogged(!logged);
     },
     [logged]
@@ -43,14 +40,11 @@ export const UserProvider: React.FC<PropsWithChildren<Props>> = ({
 
   const logout = useCallback(() => {
     setUser({});
-    setUserToken("");
     setLogged(!logged);
   }, [logged]);
 
   return (
-    <UserContext.Provider
-      value={{ user, userToken, logged, handleSetUserData, logout }}
-    >
+    <UserContext.Provider value={{ user, logged, handleSetUserData, logout }}>
       {children}
     </UserContext.Provider>
   );

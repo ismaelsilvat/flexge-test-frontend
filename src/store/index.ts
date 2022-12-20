@@ -1,25 +1,23 @@
 import createSagaMiddleware from "redux-saga";
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import apiConf from "./api/conf";
 import products from "./contract/add/products";
-import contracts from "./contract/list";
-import { initSagas } from "./sagas";
-import rootReducer from "./modules";
+import rootReducer from "./reducers/rootReducer";
+import { rootSaga } from "./sagas/rootSaga";
 
 const sagaMiddleware = createSagaMiddleware();
-const middleware = [...getDefaultMiddleware(), sagaMiddleware];
+const middleware = [sagaMiddleware];
 
 const store = configureStore({
   reducer: {
     api: apiConf,
     products: products,
-    contracts: contracts,
     rootReducer,
   },
   middleware,
 });
 
-initSagas(sagaMiddleware);
+sagaMiddleware.run(rootSaga);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

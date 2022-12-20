@@ -6,16 +6,22 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { HeaderC } from "../components";
 import { RootState } from "../store";
+import { fetchContractsRequest } from "../store/actions/contractsActions";
 import { Contract } from "../util";
-
 const { Title } = Typography;
 
 export const Dashboard: React.FC = () => {
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchContractsRequest());
+  }, [dispatch]);
 
   const contracts = useSelector(
-    (state: RootState) => state.rootReducer.contracts.items
+    (state: RootState) => state.rootReducer.contracts.Contracts
   );
+
+  console.log(contracts);
 
   const navigate = useNavigate();
 
@@ -67,7 +73,7 @@ export const Dashboard: React.FC = () => {
           <Divider />
           <Row>
             {contracts.map((e: Contract) => {
-              return <div>{e._id}</div>;
+              return <div>{e.address}</div>;
             })}
           </Row>
         </div>

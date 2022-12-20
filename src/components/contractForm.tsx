@@ -34,10 +34,6 @@ export const ContractForm: React.FC<props> = ({ form }) => {
     getData();
   }, [token]);
 
-  const onFinish = (values: any) => {
-    console.log("Received values of form: ", values);
-  };
-
   const RowS = styled.div`
     width: 100%;
     display: flex;
@@ -84,7 +80,7 @@ export const ContractForm: React.FC<props> = ({ form }) => {
   ];
 
   return (
-    <Form form={form} name="basic" layout="vertical" onFinish={onFinish}>
+    <Form form={form} name="basic" layout="vertical">
       <RowS id="contractForm">
         <Col style={{ flex: "30% 0 1" }}>
           <Form.Item
@@ -106,7 +102,6 @@ export const ContractForm: React.FC<props> = ({ form }) => {
           <Form.Item name="state" label="State" rules={[{ required: true }]}>
             <Select
               placeholder="Select a option and change input text above"
-              onChange={(e) => console.log(e.target.value)}
               disabled={disabledState}
               allowClear
             >
@@ -220,7 +215,6 @@ export const ContractForm: React.FC<props> = ({ form }) => {
             <Select
               style={{ width: "100%" }}
               placeholder="Select a option and change input text above"
-              onChange={(e) => console.log(e.target.value)}
               allowClear
             >
               {new Array(30).fill(undefined).map((e, index) => {
@@ -244,7 +238,6 @@ export const ContractForm: React.FC<props> = ({ form }) => {
             <Select
               style={{ width: "100%" }}
               placeholder="Select a option and change input text above"
-              onChange={(e) => console.log(e.target.value)}
               allowClear
             >
               {companies?.map((e, index) => {

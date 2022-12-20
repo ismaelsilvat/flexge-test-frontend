@@ -5,8 +5,6 @@ export function fetchCompanies(token: string) {
     .get(`/auth/companies`, { headers: { Authorization: `Bearer ${token}` } })
     .then(
       (response) => {
-        console.log(response);
-
         return response.data;
       },
       (error) => {

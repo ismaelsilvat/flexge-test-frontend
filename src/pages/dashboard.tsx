@@ -10,7 +10,6 @@ const { Title } = Typography;
 
 export const Dashboard: React.FC = () => {
   const token = useSelector((state: RootState) => state.api);
-  console.log(token);
 
   const navigate = useNavigate();
 

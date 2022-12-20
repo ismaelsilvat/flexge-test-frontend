@@ -7,6 +7,7 @@ export type IProduct = {
   installments: Number;
   paid_installments: Number;
   beginning_term_date: Date;
+  contract?: string
 };
 
 var data: IProduct[] = [];

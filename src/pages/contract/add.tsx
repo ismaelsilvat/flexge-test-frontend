@@ -10,8 +10,12 @@ import {
 import { useForm } from "antd/es/form/Form";
 import { Content } from "antd/es/layout/layout";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ContractForm, HeaderC, ProductForm } from "../../components";
+import { useProductsPost } from "../../services/useProductsPost";
+import { IContract, useContractPost } from "../../services/useContractPost";
+import { RootState } from "../../store";
 
 const { Title } = Typography;
 
@@ -19,6 +23,12 @@ export const NewContract: React.FC = () => {
   const navigate = useNavigate();
 
   const navigateTo = (target: string) => () => navigate(target);
+
+  // const token = useSelector(
+  //   (state: RootState) => state.api.headers.Authorization
+  // );
+
+  const products = useSelector((state: RootState) => state.products.data);
 
   const [form] = useForm();
   const [resetField, setResetField] = useState<boolean>(false);
@@ -31,6 +41,24 @@ export const NewContract: React.FC = () => {
       setTimeout(setFalse, 500);
     }
   }, [resetField]);
+
+  const SubmitFunction = async () => {
+    form.submit();
+    const contractData: IContract = form.getFieldsValue();
+
+    const contractId = await useContractPost(
+      contractData,
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWRlZTdlNGFkZTJhYjdkMDk4YmUzNiIsImlhdCI6MTY3MTQ4NjY3OCwiZXhwIjoxNjcxNTczMDc4fQ.91J-x142atgDa1FUKLGhZqvQF3J4zg2WZtEqyd62YPA"
+    );
+    await useProductsPost(
+      products,
+      contractId,
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWRlZTdlNGFkZTJhYjdkMDk4YmUzNiIsImlhdCI6MTY3MTQ4NjY3OCwiZXhwIjoxNjcxNTczMDc4fQ.91J-x142atgDa1FUKLGhZqvQF3J4zg2WZtEqyd62YPA"
+    );
+    form.resetFields();
+    setResetField(true);
+    navigateTo("/");
+  };
 
   return (
     <Layout>
@@ -104,7 +132,7 @@ export const NewContract: React.FC = () => {
           >
             Discard Changes
           </Button>
-          <Button onClick={() => form.submit()}>Create Contract</Button>
+          <Button onClick={SubmitFunction}>Create Contract</Button>
         </div>
       </Content>
     </Layout>

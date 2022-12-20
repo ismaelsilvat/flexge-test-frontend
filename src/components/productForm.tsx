@@ -48,11 +48,7 @@ export const ProductForm: React.FC<props> = ({ resetField }) => {
     const values = form.getFieldsValue();
     dispatch(addProduct(values));
     form.resetFields();
-    console.log(values);
-    console.log(products);
   };
-
-  console.log(products);
 
   return (
     <>

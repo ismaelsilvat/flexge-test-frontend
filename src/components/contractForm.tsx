@@ -16,6 +16,21 @@ interface props {
   form: FormInstance;
 }
 
+const RowS = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  @media screen and (max-width: 1024px) {
+    width: 100% !important;
+    & > .ant-col {
+      flex: 100% 0 0 !important;
+    }
+  }
+`;
+
 export const ContractForm: React.FC<props> = ({ form }) => {
   const token = useSelector(
     (state: RootState) => state.api.headers.Authorization
@@ -33,21 +48,6 @@ export const ContractForm: React.FC<props> = ({ form }) => {
     }
     getData();
   }, [token]);
-
-  const RowS = styled.div`
-    width: 100%;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    justify-content: space-between;
-
-    @media screen and (max-width: 1024px) {
-      width: 100% !important;
-      & > .ant-col {
-        flex: 100% 0 0 !important;
-      }
-    }
-  `;
 
   const states = [
     { uf: "AC", nome: "Acre" },
@@ -106,7 +106,11 @@ export const ContractForm: React.FC<props> = ({ form }) => {
               allowClear
             >
               {states.map((e) => {
-                return <Option value={e.uf}>{e.nome}</Option>;
+                return (
+                  <Option key={e.uf} value={e.uf}>
+                    {e.nome}
+                  </Option>
+                );
               })}
             </Select>
           </Form.Item>

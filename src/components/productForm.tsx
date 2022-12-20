@@ -14,6 +14,25 @@ interface props {
   resetField: boolean;
 }
 
+const RowS = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background-color: #fff;
+
+  @media screen and (max-width: 1024px) {
+    width: 100% !important;
+    & > .ant-col,
+    .ant-row.ant-form-item-row {
+      flex: 100% 0 0 !important;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+`;
+
 export const ProductForm: React.FC<props> = ({ resetField }) => {
   const [form] = useForm();
   const products = useSelector((state: RootState) => state.products.data);
@@ -24,25 +43,6 @@ export const ProductForm: React.FC<props> = ({ resetField }) => {
     form.resetFields();
     dispatch(removeAll());
   }, [dispatch, form, resetField]);
-
-  const RowS = styled.div`
-    width: 100%;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    background-color: #fff;
-
-    @media screen and (max-width: 1024px) {
-      width: 100% !important;
-      & > .ant-col,
-      .ant-row.ant-form-item-row {
-        flex: 100% 0 0 !important;
-        display: flex;
-        flex-direction: column;
-      }
-    }
-  `;
 
   const addProductClick = () => {
     const values = form.getFieldsValue();

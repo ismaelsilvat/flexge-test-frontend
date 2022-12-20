@@ -1,15 +1,21 @@
 import { Breadcrumb, Col, Row, Typography, Divider } from "antd";
 import Layout, { Content } from "antd/es/layout/layout";
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { HeaderC } from "../components";
 import { RootState } from "../store";
+import { Contract } from "../util";
 
 const { Title } = Typography;
 
 export const Dashboard: React.FC = () => {
-  const token = useSelector((state: RootState) => state.api);
+  const dispath = useDispatch();
+
+  const contracts = useSelector(
+    (state: RootState) => state.rootReducer.contracts.items
+  );
 
   const navigate = useNavigate();
 
@@ -59,6 +65,11 @@ export const Dashboard: React.FC = () => {
             </Col>
           </Row>
           <Divider />
+          <Row>
+            {contracts.map((e: Contract) => {
+              return <div>{e._id}</div>;
+            })}
+          </Row>
         </div>
       </Content>
     </Layout>

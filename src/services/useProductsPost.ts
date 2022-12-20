@@ -16,10 +16,10 @@ export function useProductsPost(
       })
       .then(
         (response) => {
-          return response.data;
+          return true
         },
         (error) => {
-          return error.response;
+          return false
         }
       );
   });

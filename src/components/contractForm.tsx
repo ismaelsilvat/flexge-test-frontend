@@ -41,9 +41,7 @@ export const ContractForm: React.FC<props> = ({ form }) => {
 
   useEffect(() => {
     async function getData() {
-      const companiesD = await fetchCompanies(
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWRlZTdlNGFkZTJhYjdkMDk4YmUzNiIsImlhdCI6MTY3MTQ4NjY3OCwiZXhwIjoxNjcxNTczMDc4fQ.91J-x142atgDa1FUKLGhZqvQF3J4zg2WZtEqyd62YPA"
-      );
+      const companiesD = await fetchCompanies(token);
       setCompanies(companiesD);
     }
     getData();

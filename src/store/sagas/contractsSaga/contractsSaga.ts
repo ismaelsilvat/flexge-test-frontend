@@ -16,15 +16,27 @@ const call: any = Effects.call;
 async function getContracts() {
   const token = store.getState().api.headers.Authorization;
   const page = store.getState().api.page;
-  const contracts = await api.get<Contract2[]>(`/auth/contracts/${page}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  const contractsUpdated = contracts.data.map((e: Contract2) => {
-    const nome = e.company[0];
-    const newObject: Contract = { ...e, company: nome };
-    return newObject;
-  });
-  return contractsUpdated;
+  if (page === "") {
+    const contracts = await api.get<Contract2[]>("/auth/contracts/0", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const contractsUpdated = contracts.data.map((e: Contract2) => {
+      const nome = e.company[0];
+      const newObject: Contract = { ...e, company: nome };
+      return newObject;
+    });
+    return contractsUpdated;
+  } else {
+    const contracts = await api.get<Contract2[]>("/auth/contracts/" + page, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const contractsUpdated = contracts.data.map((e: Contract2) => {
+      const nome = e.company[0];
+      const newObject: Contract = { ...e, company: nome };
+      return newObject;
+    });
+    return contractsUpdated;
+  }
 }
 
 export function* fetchContractsSaga(): any {

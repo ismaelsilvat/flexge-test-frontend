@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { handlePage } from "../store/api/conf";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
+import { api } from "../config/axios";
 
 interface ContractEdt {
   _id: String;
@@ -50,17 +51,31 @@ const columns: ColumnsType<ContractEdt> = [
 export const ContractsTable: React.FC<props> = ({ data }) => {
   const dispatch = useDispatch();
   const [pageCurrent, setpageCurrent] = useState<string>("");
-  const page = useSelector((state: RootState) => state.api.page);
+  const token = useSelector(
+    (state: RootState) => state.api.headers.Authorization
+  );
+
+  const [contractsTotal, setContractsTotal] = useState([]);
 
   const pageChange = (e: TablePaginationConfig) => {
-      setpageCurrent(value.toString());
-    }
+    if (e.current === undefined) return;
+    const value = e.current;
+    setpageCurrent(value.toString());
   };
 
   useEffect(() => {
-    dispatch(handlePage(pageCurrent.toString()));
+    async function getData() {
+      const fetch = await api.get("/auth/contracts", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setContractsTotal(fetch.data);
+    }
+
+    getData();
+
+    dispatch(handlePage(pageCurrent));
     dispatch({ type: "FETCH_CONTRACTS_REQUEST" });
-  }, [dispatch, pageCurrent]);
+  }, [dispatch, pageCurrent, token]);
 
   return (
     <>
@@ -72,8 +87,9 @@ export const ContractsTable: React.FC<props> = ({ data }) => {
         size="middle"
         onChange={(e) => pageChange(e)}
         pagination={{
-          defaultPageSize: 5,
-          total: 50,
+          pageSize: 5,
+          total: contractsTotal.length,
+          pageSizeOptions: ['5']
         }}
       />
     </>

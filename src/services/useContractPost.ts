@@ -18,8 +18,8 @@ export interface IContract {
   company: string;
 }
 
-export function useContractPost(ContractInfo: IContract, token: string) {
-  return api
+export async function useContractPost(ContractInfo: IContract, token: string) {
+  return await api
     .post(`/auth/contract`, ContractInfo, {
       headers: { Authorization: `Bearer ${token}` },
     })

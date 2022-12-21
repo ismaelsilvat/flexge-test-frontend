@@ -26,9 +26,9 @@ export const NewContract: React.FC = () => {
     navigate(target);
   }
 
-  // const token = useSelector(
-  //   (state: RootState) => state.api.headers.Authorization
-  // );
+  const token = useSelector(
+    (state: RootState) => state.api.headers.Authorization
+  );
 
   const products = useSelector((state: RootState) => state.products.data);
 
@@ -47,18 +47,10 @@ export const NewContract: React.FC = () => {
   const SubmitFunction = async () => {
     form.submit();
     const contractData: IContract = form.getFieldsValue();
-    const contractId = await useContractPost(
-      contractData,
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWRlZTdlNGFkZTJhYjdkMDk4YmUzNiIsImlhdCI6MTY3MTQ4NjY3OCwiZXhwIjoxNjcxNTczMDc4fQ.91J-x142atgDa1FUKLGhZqvQF3J4zg2WZtEqyd62YPA"
-    );
-    const productFetch = useProductsPost(
-      products,
-      contractId,
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWRlZTdlNGFkZTJhYjdkMDk4YmUzNiIsImlhdCI6MTY3MTQ4NjY3OCwiZXhwIjoxNjcxNTczMDc4fQ.91J-x142atgDa1FUKLGhZqvQF3J4zg2WZtEqyd62YPA"
-    );
-    console.log(productFetch);
+    const contractId = await useContractPost(contractData, token);
+    const productFetch = await useProductsPost(products, contractId, token);
 
-    if (productFetch.length !== 0) {
+    if (productFetch === true) {
       form.resetFields();
       setResetField(true);
       navigateTo("/");

@@ -20,8 +20,6 @@ export const Dashboard: React.FC = () => {
     (state: RootState) => state.rootReducer.contracts.contracts
   );
 
-  console.log(contracts);
-  
   const navigate = useNavigate();
   const navigateTo = (target: string) => () => navigate(target);
 

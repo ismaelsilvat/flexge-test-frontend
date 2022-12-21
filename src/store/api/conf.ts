@@ -34,7 +34,7 @@ export const apiConf = createSlice({
       };
     },
     handlePage: (state, action: PayloadAction<string>) => {
-      state = { ...state, page: action.payload };
+      state.page = action.payload;
     },
   },
 });

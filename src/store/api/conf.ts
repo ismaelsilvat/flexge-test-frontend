@@ -8,12 +8,19 @@ interface Headers {
   };
 }
 
-const initialState: Headers = {
+const headers: Headers = {
   headers: {
     ContentType: "application/json; charset=UTF-8",
     Authorization: "",
     AccessControlAllowOrigin: "*",
   },
+};
+
+const page: string = "0";
+
+const initialState = {
+  page,
+  headers: headers.headers,
 };
 
 export const apiConf = createSlice({
@@ -26,9 +33,12 @@ export const apiConf = createSlice({
         Authorization: action.payload,
       };
     },
+    handlePage: (state, action: PayloadAction<string>) => {
+      state = { ...state, page: action.payload };
+    },
   },
 });
 
-export const { login } = apiConf.actions;
+export const { login, handlePage } = apiConf.actions;
 
 export default apiConf.reducer;

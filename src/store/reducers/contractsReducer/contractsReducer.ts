@@ -3,7 +3,7 @@ import { ContractsActions, ContractsState } from "../../types/types";
 
 const initialState: ContractsState = {
   pending: false,
-  Contracts: [],
+  contracts: [],
   error: null,
 };
 
@@ -18,7 +18,7 @@ export default (state = initialState, action: ContractsActions) => {
       return {
         ...state,
         pending: false,
-        contracts: action.payload.Contracts,
+        contracts: action.payload.contracts,
         error: null,
       };
     case contractsTypes.FETCH_CONTRACTS_FAILURE:

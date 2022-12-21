@@ -4,10 +4,9 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { HeaderC } from "../components";
+import { ContractsTable, HeaderC } from "../components";
 import { RootState } from "../store";
 import { fetchContractsRequest } from "../store/actions/contractsActions";
-import { Contract } from "../util";
 const { Title } = Typography;
 
 export const Dashboard: React.FC = () => {
@@ -18,13 +17,12 @@ export const Dashboard: React.FC = () => {
   }, [dispatch]);
 
   const contracts = useSelector(
-    (state: RootState) => state.rootReducer.contracts.Contracts
+    (state: RootState) => state.rootReducer.contracts.contracts
   );
 
   console.log(contracts);
-
+  
   const navigate = useNavigate();
-
   const navigateTo = (target: string) => () => navigate(target);
 
   return (
@@ -72,9 +70,7 @@ export const Dashboard: React.FC = () => {
           </Row>
           <Divider />
           <Row>
-            {contracts.map((e: Contract) => {
-              return <div>{e.address}</div>;
-            })}
+            <ContractsTable data={contracts} />
           </Row>
         </div>
       </Content>

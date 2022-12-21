@@ -9,25 +9,30 @@ import { api } from "../../../config/axios";
 import store from "../..";
 
 import * as Effects from "redux-saga/effects";
+import { Contract2 } from "../../types/types";
 
 const call: any = Effects.call;
 
 async function getContracts() {
   const token = store.getState().api.headers.Authorization;
-  console.log(token);
-
-  const contracts = await api.get<Contract[]>("/auth/contracts", {
+  const page = store.getState().api.page;
+  const contracts = await api.get<Contract2[]>(`/auth/contracts/${page}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
-  return contracts.data;
+  const contractsUpdated = contracts.data.map((e: Contract2) => {
+    const nome = e.company[0];
+    const newObject: Contract = { ...e, company: nome };
+    return newObject;
+  });
+  return contractsUpdated;
 }
 
-function* fetchContractsSaga(): any {
+export function* fetchContractsSaga(): any {
   try {
     const response = yield call(getContracts);
     yield put(
       fetchContractsSuccess({
-        Contracts: response.data,
+        contracts: response,
       })
     );
   } catch (e) {

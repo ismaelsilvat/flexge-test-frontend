@@ -1,6 +1,8 @@
 import { IContract } from "../services/useContractPost";
+import { Contract } from "../store/types/types";
 
-export interface Contract extends IContract {
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export interface Contract extends Contract {
   _id: string;
 }
 
